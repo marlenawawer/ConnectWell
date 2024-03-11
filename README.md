@@ -13,8 +13,8 @@ git clone git@github.com:marlenawawer/ConnectWell.git
 1.2. Using HTTPS
 git clone https://github.com/marlenawawer/ConnectWell.git
 
-2. Install libraies
+3. Install libraies
 pip install dotenv os halo openai speech_recognition pyttsx3 streamlit
 
-3. Run the file
+4. Run the file
 streamlit run ConnectWell.py
