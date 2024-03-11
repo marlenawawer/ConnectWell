@@ -2,10 +2,10 @@ from dotenv import load_dotenv
 import os
 from halo import Halo
 from openai import OpenAI
-import chromadb
-from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 import speech_recognition as sr
 import pyttsx3
+import streamlit as st
+import time
 
 load_dotenv(dotenv_path='.\constvar.env')
 chat_history = []
@@ -50,53 +50,30 @@ def get_audio_mic():
         return text
 
 
-def main():
-    # Initialize the messages with a system message.
-    chroma_client = chromadb.Client()
-    embedding_function = OpenAIEmbeddingFunction(api_key=os.getenv("OPENAI_KEY"), model_name=os.getenv("EMBEDDING_MODEL"))
-    collection = chroma_client.create_collection(name="conversations", embedding_function=embedding_function)
-    current_id = 0
+def main():    
+    st.title("ConnectWell")
     messages=[{"role": "system", "content": "Hello. My name is Connect Well."}]
-     
-    speak_chat('Hello. My name is Connect Well.') 
+    start = st.toggle('Slide right to start chatting')
+    if start:
+        window = st.container(height=300)
+        window.chat_message("assistant").write('Hello. My name is Connect Well.')
+        speak_chat('Hello. My name is Connect Well.') 
+        while True:
+            plakceholder = st.empty()
+            plakceholder.text("Recording started.")
+            input_text = get_audio_mic()
+            plakceholder.empty()
+            window.chat_message("user").write(f"{input_text}")
+            messages.append({"role": "user", "content": input_text})
 
-    # Continue chatting
-    while True:
-        input_text = get_audio_mic()
+            # Get a response from the model and add it to the messages
+            response = generate_response(messages)
 
-        results = collection.query(query_texts=[input_text], 
-                                   where={"role": "assistant"}, 
-                                   n_results=2)
-        
-        for res in results['documents'][0]:
-            messages.append({"role": "user", "content": f"previous chat: {res}"})
-
-        # Add the user's message to the messages
-        messages.append({"role": "user", "content": input_text})
-
-        # Get a response from the model and add it to the messages
-        response = generate_response(messages)
-
-        chat_metadata.append({"role":"user"})
-        chat_history.append(input_text)
-        chat_metadata.append({"role":"assistant"})
-        chat_history.append(response.content)
-        current_id += 1
-        history_ids.append(f"id_{current_id}")
-        current_id += 1
-        history_ids.append(f"id_{current_id}")
-        collection.add(
-            documents=chat_history,
-            metadatas=chat_metadata,
-            ids=history_ids)
-        messages.append({"role": "system", "content": response.content})
-
-        speak_chat(response.content)
-
-        # Print the assistant's response
-        # print(f"ConnectWell: {chat_history}")
-
-
+            messages.append({"role": "system", "content": response.content})
+            window.chat_message("assistant").write(f'{response.content}')
+            speak_chat(response.content)
+    else:
+        st.stop()
 
 if __name__ == "__main__":
     main()
