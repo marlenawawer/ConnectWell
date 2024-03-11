@@ -8,9 +8,6 @@ import streamlit as st
 import time
 
 load_dotenv(dotenv_path='.\constvar.env')
-chat_history = []
-chat_metadata = []
-history_ids = []
 
 def generate_response(messages):
     # Create a loading spinner
