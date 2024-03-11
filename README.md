@@ -1,5 +1,7 @@
 ConnectWell - Voice Assistant
 
+https://github.com/marlenawawer/ConnectWell/assets/112976670/078861b5-cfb1-4458-9235-e869ecc498ce
+
 Description: ConnectWell is a personal voice assistant created using the OpenAI API. The interface is built using Streamlit.
 
 Usage Instructions:
