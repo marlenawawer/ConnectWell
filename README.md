@@ -18,8 +18,7 @@ Installation
    git clone https://github.com/marlenawawer/ConnectWell.git
 
 3. Install libraies
-pip install dotenv os halo openai speech_recognition pyttsx3 streamlit.
-To install whisper follow this instruction https://pypi.org/project/openai-whisper/
+pip install dotenv os halo openai speech_recognition pyttsx3 streamlit
 
 5. Run the file
 streamlit run ConnectWell.py
