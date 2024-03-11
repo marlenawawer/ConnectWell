@@ -19,6 +19,7 @@ Installation
 
 3. Install libraies
 pip install dotenv os halo openai speech_recognition pyttsx3 streamlit
+to install whisper follow this instruction https://pypi.org/project/openai-whisper/
 
-4. Run the file
+5. Run the file
 streamlit run ConnectWell.py
