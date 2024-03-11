@@ -8,8 +8,10 @@ To stop recording, simply slide the toggle to the left.
 
 Installation
 1. Clone the repository
+   
 1.1. Using SSH
 git clone git@github.com:marlenawawer/ConnectWell.git
+
 1.2. Using HTTPS
 git clone https://github.com/marlenawawer/ConnectWell.git
 
